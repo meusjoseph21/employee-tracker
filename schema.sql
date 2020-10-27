@@ -49,3 +49,17 @@ VALUES
 ("Joe", "Buck", 1, 1),
 ("Katie", "Winslot", 3, 1),
 ("Connor", "McGregor", 4,1),
+
+
+SELECT
+  
+  employees.first_name
+  employees.last_name
+  department.name as Department
+  employees.role_id as Job
+  employees.manager_id as Manager
+
+FROM department
+LEFT JOIN employees ON department.name = role.department_id
+LEFT JOIN employees ON role.id = employees.role_id
+LEFT JOIN employees ON employees.id = employees.manager_id;
