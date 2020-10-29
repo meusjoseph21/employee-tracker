@@ -1,6 +1,7 @@
 const inquirer = require("inquirer")
 const mysql = require("mysql")
 require("console.table")
+var figlet = require('figlet');
 
 //sql connection
 const connection = mysql.createConnection({
@@ -17,15 +18,29 @@ const connection = mysql.createConnection({
     database: "employeesDB"
   });
 
+  figlet('Employee Manager', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log("\n============================")
+    console.log(data)
+    console.log("\n============================\n\n\n\n\n\n")
+});
+
+
 
 //create questions
 function initQuestions(){
+
+   
     inquirer.prompt(
         {
             type: "list",
             message: "What would you like to do?",
             name: "start",
-            choices: ["view all employees", "view all departments", "view all roles", "add employee", "add department", "add role", "update role","exit"]
+            choices: ["view all employees", "view all departments", "view all roles", "add employee", "add department", "add role", "update role", "delete employee", "exit"]
         }
     ).then(function(response){
         console.log(response)
@@ -43,6 +58,8 @@ function initQuestions(){
             case "add role": addRole()
                 break
             case "update role": updateRole()
+                break
+            case "delete employee": deleteEmployee()
                 break
             case "exit": stop()
                 break
@@ -209,6 +226,22 @@ function updateRole(){
         })
     })
 
+}
+
+function deleteEmployee(){
+    console.log("Deleting all strawberry icecream...\n");
+  connection.query(
+    "DELETE FROM products WHERE ?",
+    {
+      flavor: "Strawberry"
+    },
+    function(err, res) {
+      if (err) throw err;
+      console.log(res.affectedRows + " products deleted!\n");
+      // Call readProducts AFTER the DELETE completes
+      readProducts();
+    }
+  );
 }
 
 function stop(){
