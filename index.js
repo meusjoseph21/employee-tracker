@@ -1,9 +1,10 @@
+//dependencies
 const inquirer = require("inquirer")
 const mysql = require("mysql")
 require("console.table")
 var figlet = require('figlet');
 
-//sql connection
+//sql connection ======================================
 const connection = mysql.createConnection({
     host: "localhost",
   
@@ -17,7 +18,10 @@ const connection = mysql.createConnection({
     password: "password",
     database: "employeesDB"
   });
+  //======================================
 
+
+  //Figlet animation ======================================
   figlet('Employee Manager', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
@@ -28,10 +32,11 @@ const connection = mysql.createConnection({
     console.log(data)
     console.log("\n============================\n\n\n\n\n\n")
 });
+//======================================
 
 
 
-//create questions
+//create questions ======================================
 function initQuestions(){
 
    
@@ -66,7 +71,9 @@ function initQuestions(){
         }
     })
 }
+//========================================================================================================================
 
+//all employees option ======================================
 function allEmployees(){
 
     console.log("Selecting all employees...\n");
@@ -78,7 +85,9 @@ function allEmployees(){
   });
 
 }
+//========================================================================================================================
 
+//all department option ======================================
 function departments(){
    connection.query("SELECT department.name AS departments FROM department", function (err, res){
        if (err) throw (err);
@@ -88,7 +97,9 @@ function departments(){
    })
 
 }
+//========================================================================================================================
 
+//all roles option ======================================
 function roles(){
     connection.query("SELECT role.title AS Roles FROM role", function (err, res){
         if (err) throw (err);
@@ -98,7 +109,9 @@ function roles(){
     })
 
 }
+//========================================================================================================================
 
+//add employee option ======================================
 function addEmployee(){
     inquirer.prompt([
         
@@ -144,7 +157,9 @@ function addEmployee(){
     })
     
 }
+//========================================================================================================================
 
+//add department option ======================================
 function addDepartment(){
     inquirer.prompt(
         {
@@ -168,7 +183,9 @@ function addDepartment(){
    
 
 }
+//========================================================================================================================
 
+//add role option ======================================
 function addRole(){
     inquirer.prompt([
         {
@@ -200,7 +217,9 @@ function addRole(){
         })
     })
 }
+//========================================================================================================================
 
+//update role option ======================================
 function updateRole(){
     inquirer.prompt([
         {
@@ -227,7 +246,9 @@ function updateRole(){
     })
 
 }
+//========================================================================================================================
 
+//delete employee option ======================================
 function deleteEmployee(){
     inquirer.prompt([
         {
@@ -250,11 +271,14 @@ function deleteEmployee(){
     })
     
 }
+//========================================================================================================================
 
+//exit option ======================================
 function stop(){
     console.log("Goodbye!")
     connection.end()
 }
+//========================================================================================================================
 
 //initialize
 initQuestions()
