@@ -229,19 +229,26 @@ function updateRole(){
 }
 
 function deleteEmployee(){
-    console.log("Deleting all strawberry icecream...\n");
-  connection.query(
-    "DELETE FROM products WHERE ?",
-    {
-      flavor: "Strawberry"
-    },
-    function(err, res) {
-      if (err) throw err;
-      console.log(res.affectedRows + " products deleted!\n");
-      // Call readProducts AFTER the DELETE completes
-      readProducts();
-    }
-  );
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the first name of the Employee?",
+            name: "first_name"
+        },
+        {
+            type: "input",
+            message: "What is the last name of the Employee?",
+            name: "last_name"
+        }
+
+    ]).then(function(response){
+        connection.query("DELETE FROM employees WHERE first_name = '" + response.first_name + "' and last_name = '" + response.last_name + "'", function(err, res){
+            if (err) throw console.log("Managers can not be removed")
+            console.log(`${response.first_name}'s has been removed.`)
+            initQuestions()
+        })
+    })
+    
 }
 
 function stop(){
