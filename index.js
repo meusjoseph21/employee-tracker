@@ -31,6 +31,8 @@ const connection = mysql.createConnection({
     console.log("\n============================")
     console.log(data)
     console.log("\n============================\n\n\n\n\n\n")
+    //initialize questions
+    initQuestions()
 });
 //======================================
 
@@ -280,5 +282,3 @@ function stop(){
 }
 //========================================================================================================================
 
-//initialize
-initQuestions()
