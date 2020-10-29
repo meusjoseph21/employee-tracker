@@ -25,7 +25,7 @@ function initQuestions(){
             type: "list",
             message: "What would you like to do?",
             name: "start",
-            choices: ["view all employees", "view all departments", "view all roles", "add employee", "add department", "exit"]
+            choices: ["view all employees", "view all departments", "view all roles", "add employee", "add department", "add role", "exit"]
         }
     ).then(function(response){
         console.log(response)
@@ -40,7 +40,9 @@ function initQuestions(){
                 break
             case "add department": addDepartment()
                 break
-            case "exit": console.log("Goodbye")
+            case "add role": addRole()
+                break
+            case "exit": stop()
                 break
         }
     })
@@ -94,7 +96,8 @@ function addEmployee(){
               {
                 type: "number",
                 message: "Please select your role number",
-                name: "roleID"
+                name: "roleID",
+             
               },
               {
                 type: "number",
@@ -123,6 +126,66 @@ function addEmployee(){
     
 }
 
+function addDepartment(){
+    inquirer.prompt(
+        {
+            type: "input",
+            message: "Enter a Department Name: ",
+            name: "department"
+        }
+    ).then(function(response){
+        console.log("adding a new department...\n")
+        connection.query("INSERT INTO department SET ?", 
+        {
+            name: response.department
+        }, function(err, response){
+            if (err) throw (err);
+            
+            console.log("added")
+            initQuestions()
+        })
+        
+    }) 
+   
+
+}
+
+function addRole(){
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the title of this position?",
+            name: "title"
+        },
+        {
+            type: "number",
+            message: "What is the salary of this position?",
+            name: "salary"
+        },
+        {
+            type: "number",
+            message: "What is the department ID for this position?",
+            name: "department_id"
+        }
+    ]).then(function(response){
+        console.log("adding a new role..,\n")
+        connection.query("INSERT INTO role SET ?", 
+        {
+            title: response.title,
+            salary: response.salary,
+            department_id: response.department_id
+        }, function(err, res){
+            if (err) throw (err);
+            console.log(`${response.title} added`)
+            initQuestions()
+        })
+    })
+}
+
+function stop(){
+    console.log("Goodbye!")
+    connection.end()
+}
 
 //initialize
 initQuestions()
