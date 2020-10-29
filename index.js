@@ -25,7 +25,7 @@ function initQuestions(){
             type: "list",
             message: "What would you like to do?",
             name: "start",
-            choices: ["view all employees", "view all departments", "view all roles", "add employee", "add department", "add role", "exit"]
+            choices: ["view all employees", "view all departments", "view all roles", "add employee", "add department", "add role", "update role","exit"]
         }
     ).then(function(response){
         console.log(response)
@@ -41,6 +41,8 @@ function initQuestions(){
             case "add department": addDepartment()
                 break
             case "add role": addRole()
+                break
+            case "update role": updateRole()
                 break
             case "exit": stop()
                 break
@@ -180,6 +182,33 @@ function addRole(){
             initQuestions()
         })
     })
+}
+
+function updateRole(){
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the first name of the Employee?",
+            name: "first_name"
+        },
+        {
+            type: "input",
+            message: "What is the last name of the Employee?",
+            name: "last_name"
+        },
+        {
+            type: "number",
+            message: "What role ID would you like to give this employee?",
+            name: "role_id"
+        }
+    ]).then(function(response){
+        connection.query("UPDATE employees SET role_id = " + response.role_id + " WHERE first_name = '" + response.first_name + "' and last_name = '" + response.last_name + "'", function(err, res){
+            if (err) throw (err)
+            console.log(`${response.first_name}'s role has been updated.`)
+            initQuestions()
+        })
+    })
+
 }
 
 function stop(){
