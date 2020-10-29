@@ -51,3 +51,5 @@
 
   Image example: 
 
+  <img src = "./assets/images/example.png">
+
