@@ -47,7 +47,7 @@
 
   Github repository: https://github.com/meusjoseph21/employee-tracker
 
-  Live Video of usage: 
+  Live Video of usage: https://drive.google.com/file/d/1-X7fU7GkJgFnLGNpzttBJk6pkZviS-WW/view
 
   Image example: 
 
